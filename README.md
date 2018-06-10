@@ -1,3 +1,10 @@
+# Notes
+Implementation took ~1.5hrs spread over the weekend.
+
+My current employer does not use Git or practice TDD. I have taught myself how to use these in my spare time.
+
+Given more time, I would extend the tests to cover negative values (to stop "paying in" via a withdrawal and vice versa) as well as mocking up the repositories to suitably test the Execute methods and calling the Notification service.
+
 # Moneybox Money Withdrawal
 
 The solution contains a .NET core library (Moneybox.App) which is structured into the following 3 folders:
@@ -12,7 +19,7 @@ The task is to implement a money withdrawal in the WithdrawMoney.Execute(...) me
 
 As part of this process however, you should look to refactor some of the code in the TransferMoney.Execute(...) method into the domain models, and make these models less susceptible to misuse. We're looking to make our domain models rich in behaviour and much more than just plain old objects, however we don't want any data persistance operations (i.e. data access repositories) to bleed into our domain. This should simplify the task of implementing WidthdrawMoney.Execute(...).
 
-## Guidlines
+## Guidelines
 
 * You should spend no more than 1 hour on this task, although there is no time limit
 * You should fork or copy this repository into your own public repository (Gihub, BitBucket etc.) before you do your work
