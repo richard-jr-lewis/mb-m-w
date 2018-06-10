@@ -20,30 +20,22 @@ namespace Moneybox.App.Features
             var from = _accountRepository.GetAccountById(fromAccountId);
             var to = _accountRepository.GetAccountById(toAccountId);
 
-            var fromBalance = from.Balance - amount;
-            from.CheckWithdraw(fromBalance);
+            from.Withdraw(amount);
 
-            if (fromBalance < Account.FundsLowNotificationLimit)
+            to.PayIn(amount);
+
+            _accountRepository.Update(from);
+            _accountRepository.Update(to);
+
+            if (from.IsLowFunds)
             {
                 _notificationService.NotifyFundsLow(from.User.Email);
             }
 
-            var paidIn = to.PaidIn + amount;
-            to.CheckPayIn(paidIn);
-
-            if (Account.PayInLimit - paidIn < Account.PayInNotificationLimit)
+            if (to.IsApproachingPayInLimit)
             {
                 _notificationService.NotifyApproachingPayInLimit(to.User.Email);
             }
-
-            from.Balance = fromBalance;
-            from.Withdrawn = from.Withdrawn - amount;
-
-            to.Balance = to.Balance + amount;
-            to.PaidIn = paidIn;
-
-            _accountRepository.Update(from);
-            _accountRepository.Update(to);
         }
     }
 }
